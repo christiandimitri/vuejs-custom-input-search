@@ -6,6 +6,12 @@
         <input type="text" v-model="region" placeholder="Region/Location" />
       </div>
       <div class="is-search-tool">
+        <h3>Price Range:</h3>
+        <label for="vol">400 to 5000</label>
+        <input type="range" v-model="price" min="400" max="5000" step="10" />
+        {{ price }}
+      </div>
+      <div class="is-search-tool">
         <h3>Property Type:</h3>
         Villa: <input type="checkbox" value="Villa" v-model="types" /> Room:
         <input type="checkbox" value="Room" v-model="types" /> Appartment:
@@ -22,7 +28,7 @@
     </div>
 
     <ul id="products-grid">
-      <li
+      <div
         class="product-box"
         v-for="(product, index) in filterProducts"
         :key="index"
@@ -37,7 +43,7 @@
           <strong>{{ product.category }}</strong> - Product Area:
           <strong>{{ product.area }}</strong>
         </div>
-      </li>
+      </div>
     </ul>
   </div>
 </template>
@@ -50,34 +56,35 @@ export default {
       categories: [],
       types: [],
       prices: [],
+      price: 1000,
       region: "",
       // category: "",
       products: [
         {
           region: "Beirut",
           type: "Appartment",
-          price: 44,
+          price: 1000,
           category: "Rent",
           area: 253
         },
         {
           region: "Jbeil",
           type: "Room",
-          price: 20,
-          category: "Buy",
+          price: 400,
+          category: "Rent",
           area: 35
         },
         {
           region: "Jal el dib",
           type: "Chalet",
-          price: 399,
+          price: 1500,
           category: "Rent",
           area: 75
         },
         {
           region: "Jbeil",
           type: "Villa",
-          price: 599,
+          price: 600,
           category: "Buy",
           area: 750
         },
@@ -91,7 +98,7 @@ export default {
         {
           region: "Beirut",
           type: "House",
-          price: 6,
+          price: 1500,
           category: "Rent",
           area: 500
         },
@@ -105,14 +112,14 @@ export default {
         {
           region: "Dbayeh",
           type: "Villa",
-          price: 7,
+          price: 1500,
           category: "Buy",
           area: 1000
         },
         {
           region: "Rabieh",
           type: "Appartment",
-          price: 2,
+          price: 2500,
           category: "Rent",
           area: 150
         },
@@ -133,7 +140,9 @@ export default {
           (this.region.length === 0 || item.region.includes(this.region)) &&
           (this.categories.length === 0 ||
             this.categories.includes(item.category)) &&
-          (this.types.length === 0 || this.types.includes(item.type))
+          (this.types.length === 0 || this.types.includes(item.type)) &&
+          (this.price.length === 0 ||
+            (item.price > 0 && item.price < this.price))
         );
       });
     }
@@ -142,29 +151,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#type {
+  display: flex;
+  flex-wrap: flex-wrap;
+}
 #search-box {
   margin-right: auto;
   margin-left: auto;
+  flex-wrap: wrap;
   justify-content: center;
   display: flex;
 }
 .is-search-tool {
-  margin-right: 5rem;
-  margin-left: 5rem;
+  width: 400px;
+  margin-right: 1rem;
+  margin-left: 1rem;
 }
 #products-grid {
   display: flex;
   flex-wrap: wrap;
-  background-color: antiquewhite;
+  justify-content: center;
+  background-color: whitesmoke;
   margin-top: 3rem;
+  margin-bottom: 3rem;
   padding-top: 1.5rem;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 0;
-  padding-left: 0;
+  padding-bottom: 1.5rem;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
   width: 100%;
-  height: 100%;
-  overflow-y: scroll;
+  // height: 100%;
+  // overflow-y: scroll;
 }
 .hero {
   width: 100%;
@@ -172,17 +190,19 @@ export default {
   // overflow: hidden;
 }
 .product-box {
-  margin-right: 1rem;
-  margin-left: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  // padding-top: 1rem;
+  // padding-bottom: 1rem;
+  width: 350px;
   height: 400px;
 }
 .bg-light {
-  background-color: aliceblue;
+  background-color: white;
 }
 .bg-dark {
-  background-color: chocolate;
+  background-color: grey;
 }
 </style>
