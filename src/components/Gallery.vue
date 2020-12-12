@@ -27,24 +27,28 @@
       </div>
     </div>
 
-    <ul id="products-grid">
+    <div v-if="filterProducts.length != 0" id="products-grid">
       <div
         class="product-box"
         v-for="(product, index) in filterProducts"
+        :class="index % 2 == 0 ? 'bg-light' : 'bg-dark'"
         :key="index"
       >
-        <div
-          style="width: 100%; height:100%"
-          :class="index % 2 == 0 ? 'bg-light' : 'bg-dark'"
-        >
-          Property Region: <strong>{{ product.region }}</strong> - Product Type:
-          <strong>{{ product.type }}</strong> - Product Price:
-          <strong>{{ product.price }}</strong> - Product Category:
-          <strong>{{ product.category }}</strong> - Product Area:
-          <strong>{{ product.area }}</strong>
+        Property Region: <strong>{{ product.region }}</strong> - Product Type:
+        <strong>{{ product.type }}</strong> - Product Price:
+        <strong>{{ product.price }}</strong> - Product Category:
+        <strong>{{ product.category }}</strong> - Product Area:
+        <strong>{{ product.area }}</strong>
+        <div id="product-image">
+          <img src="http://via.placeholder.com/350x250" alt="property image" />
         </div>
       </div>
-    </ul>
+    </div>
+    <div v-else id="no-match">
+      <div class="product-box">
+        No Match !!!
+      </div>
+    </div>
   </div>
 </template>
 
@@ -181,6 +185,7 @@ export default {
   padding-right: 0 !important;
   padding-left: 0 !important;
   width: 100%;
+  min-height: 400px;
   // height: 100%;
   // overflow-y: scroll;
 }
@@ -198,6 +203,19 @@ export default {
   // padding-bottom: 1rem;
   width: 350px;
   height: 400px;
+}
+#no-match {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  width: 100%;
+  min-height: 400px;
+  background-color: whitesmoke;
 }
 .bg-light {
   background-color: white;
